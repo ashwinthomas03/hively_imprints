@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 
@@ -19,7 +19,7 @@ function AppContent() {
   const scrollToSection = (sectionId) => {
     // If we're not on the home page, navigate to home first
     if (location.pathname !== '/') {
-      window.location.href = `/#${sectionId}`;
+      window.location.href = `#/${sectionId}`;
       return;
     }
     
@@ -151,12 +151,14 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
+        {/* Add a catch-all redirect to home page */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
 }
 
-// Wrapper component for BrowserRouter
+// Wrapper component for HashRouter
 function App() {
   return (
     <Router>

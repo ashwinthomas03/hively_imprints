@@ -4,6 +4,8 @@
   font-family: 'Poppins', sans-serif;
 }
 
+
+
 /* HERO SECTION */
 .hero-section {
   position: relative;
@@ -53,15 +55,14 @@
 }
 
 .logo-image {
-  width: auto; /* Adjust the width as needed */
-  height: 100; /* Maintain aspect ratio */
+  width: 80; /* Adjust the width as needed */
+  height: 80; /* Maintain aspect ratio */
   margin-bottom: 10;
 }
 
 
 .logo-circle {
-  width: 150px;
-  height: 150px;
+  width: 100px;
   background-color: white;
   border-radius: 50%;
   display: flex;
