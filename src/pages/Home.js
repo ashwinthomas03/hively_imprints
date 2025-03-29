@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
-import weddingCardImage from 'public/WeddingCard.png';
+import weddingCardImage from 'src/WeddingCard.png';
 
 
 function Home() {
