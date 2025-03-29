@@ -120,7 +120,11 @@ function Home() {
           >
             <div className="logo-container">
               <div className="logo-text">
-                <img src="/logo192.png" alt="Hively Imprints Logo" className="logo-image" />
+              <img 
+                src={`${process.env.PUBLIC_URL}/logo192.png`} 
+                alt="Elegant Invitations" 
+                className="category-image-content" 
+              />                     
               </div>
             </div>
           </motion.div>
@@ -277,8 +281,11 @@ function Home() {
             whileHover={{ scale: 1.03 }}
           >
             <div className="category-image-gift">
-                <img src="/GiftBox.png" alt="Custom Gift Boxes" className="category-image-content" />
-              </div>   
+            <img 
+                src={`${process.env.PUBLIC_URL}/GiftBox.png`} 
+                alt="Elegant Invitations" 
+                className="category-image-content" 
+              />                     </div>   
             <div className="category-overlay">
               <h3>Custom Gift Boxes</h3>
               <button 
@@ -384,8 +391,11 @@ function Home() {
               animate={isVisible.about ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              <img src="logo192.png" alt="About Us" className="about-image-content" />
-            </motion.div>
+              <img 
+                src={`${process.env.PUBLIC_URL}/logo192.png`} 
+                alt="Elegant Invitations" 
+                className="category-image-content" 
+              />                   </motion.div>
           </div>
         </div>
       </motion.section>
