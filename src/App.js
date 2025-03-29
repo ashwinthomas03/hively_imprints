@@ -16,7 +16,7 @@ function App() {
                 <Link to="/" className="nav-links">Home</Link>
               </li>
               <li className="nav-item">
-                <Link to="/products" className="nav-links">Products</Link>
+                <Link to="/products" className="nav-links">Product Store</Link>
               </li>
             </ul>
           </div>
