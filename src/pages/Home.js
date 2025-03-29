@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
-import weddingCardImage from '/WeddingCard.png';
 
 
 function Home() {
@@ -255,7 +254,11 @@ function Home() {
             whileHover={{ scale: 1.03 }}
           >
               <div className="category-image">
-              <img src={weddingCardImage} alt="Elegant Invitations" className="category-image-content" />         
+              <img 
+                src={`${process.env.PUBLIC_URL}/WeddingCard.png`} 
+                alt="Elegant Invitations" 
+                className="category-image-content" 
+              />              
               </div>            
               <div className="category-overlay">
               <h3>Elegant Invitations</h3>
