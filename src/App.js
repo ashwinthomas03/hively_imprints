@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
-import Products from './pages/Products';
 
 function App() {
   return (
@@ -16,7 +15,13 @@ function App() {
                 <Link to="/" className="nav-links">Home</Link>
               </li>
               <li className="nav-item">
-                <Link to="/products" className="nav-links">Product Store</Link>
+                <Link to="/" className="nav-links">Our Collection</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/" className="nav-links">About</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/" className="nav-links">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -24,7 +29,6 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
         </Routes>
       </div>
     </Router>

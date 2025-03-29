@@ -128,7 +128,7 @@ function Home() {
             transition={{ delay: 1, duration: 0.5 }}
             whileHover={{ scale: 1.05, backgroundColor: "#3a8a3e" }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = '/products'}
+            onClick={() => window.location.href = '/Our collection'}
           >
             Explore Our Collection
           </motion.button>
@@ -264,10 +264,27 @@ function Home() {
           >
             <div className="category-image decor-image"></div>
             <div className="category-overlay">
-              <h3>Digtal Designs</h3>
+              <h3>Templates</h3>
               <button 
                 className="category-btn" 
-                onClick={() => window.open('https://rb.gy/npfcbj')}
+                onClick={() => window.open('https://hively-imprints.printify.me/')}
+              >
+                View Collection
+              </button>     
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="category-card"
+            variants={itemVariants}
+            whileHover={{ scale: 1.03 }}
+          >
+            <div className="category-image decor-image"></div>
+            <div className="category-overlay">
+              <h3>Digital Designs</h3>
+              <button 
+                className="category-btn" 
+                onClick={() => window.open('https://hively-imprints.printify.me/')}
               >
                 View Collection
               </button>     
