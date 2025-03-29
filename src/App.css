@@ -51,12 +51,33 @@
   padding: 0.5rem 1rem;
   height: 100%;
   border-bottom: 3px solid transparent;
+  transition: all 0.2s ease-out;
+  cursor: pointer;
 }
 
 .nav-links:hover {
   color: #4CAF50;
   border-bottom: 3px solid #4CAF50;
-  transition: all 0.2s ease-out;
+}
+
+/* Add active state for navigation links */
+.nav-links.active {
+  color: #4CAF50;
+  border-bottom: 3px solid #4CAF50;
+}
+
+/* JavaScript can add this class when the section is in view */
+.nav-links.in-view {
+  color: #4CAF50;
+  border-bottom: 3px solid #4CAF50;
+}
+
+/* Page container styles */
+.page-container {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 80vh;
 }
 
 @media screen and (max-width: 960px) {

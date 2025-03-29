@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState({
     hero: false,
     features: false,
-    about: false
+    about: false,
+    social: false
   });
 
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
   const aboutRef = useRef(null);
+  const socialRef = useRef(null);
 
   useEffect(() => {
     // Set hero visible immediately
@@ -28,6 +32,8 @@ function Home() {
             setIsVisible(prev => ({ ...prev, features: true }));
           } else if (entry.target === aboutRef.current) {
             setIsVisible(prev => ({ ...prev, about: true }));
+          } else if (entry.target === socialRef.current) {
+            setIsVisible(prev => ({ ...prev, social: true }));
           }
         }
       });
@@ -37,10 +43,12 @@ function Home() {
     
     if (featuresRef.current) observer.observe(featuresRef.current);
     if (aboutRef.current) observer.observe(aboutRef.current);
+    if (socialRef.current) observer.observe(socialRef.current);
 
     return () => {
       if (featuresRef.current) observer.unobserve(featuresRef.current);
       if (aboutRef.current) observer.unobserve(aboutRef.current);
+      if (socialRef.current) observer.unobserve(socialRef.current);
     };
   }, []);
 
@@ -68,6 +76,25 @@ function Home() {
     }
   };
 
+  // Handle navigation to Collection page
+  const handleExploreCollection = () => {
+    const collectionSection = document.getElementById('collection');
+    if (collectionSection) {
+      collectionSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Handle smooth scroll to About section
+  const handleLearnMore = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      window.scrollTo({
+        top: aboutSection.offsetTop - 80, // Offset for navbar height
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className="home-container">
       {/* Hero Section with Parallax Effect */}
@@ -80,6 +107,7 @@ function Home() {
         }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         ref={heroRef}
+        id="home"
       >
         <div className="hero-parallax"></div>
         <div className="hero-overlay"></div>
@@ -90,10 +118,10 @@ function Home() {
             transition={{ delay: 0.2, duration: 0.8 }}
           >
             <div className="logo-container">
-            <div className="logo-text">
-              <img src="/logo192.png" alt="Hively Imprints Logo" className="logo-image" />
+              <div className="logo-text">
+                <img src="/logo192.png" alt="Hively Imprints Logo" className="logo-image" />
+              </div>
             </div>
-          </div>
           </motion.div>
           
           <motion.h1
@@ -128,7 +156,7 @@ function Home() {
             transition={{ delay: 1, duration: 0.5 }}
             whileHover={{ scale: 1.05, backgroundColor: "#3a8a3e" }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = '/Our collection'}
+            onClick={handleExploreCollection}
           >
             Explore Our Collection
           </motion.button>
@@ -142,6 +170,7 @@ function Home() {
         initial="hidden"
         animate={isVisible.features ? "visible" : "hidden"}
         ref={featuresRef}
+        id="features"
       >
         <motion.h2 
           variants={itemVariants}
@@ -182,8 +211,6 @@ function Home() {
             <h3>Personalized Service</h3>
             <p>Custom designs tailored to match your unique style and vision</p>
           </motion.div>
-
-          
           
           <motion.div 
             className="feature-card"
@@ -210,6 +237,7 @@ function Home() {
         initial="hidden"
         animate={isVisible.features ? "visible" : "hidden"}
         transition={{ delay: 0.3 }}
+        id="collection"
       >
         <motion.h2 
           variants={itemVariants}
@@ -244,7 +272,7 @@ function Home() {
             whileHover={{ scale: 1.03 }}
           >
             <div className="category-image-gift">
-                <img src="/GiftBox.png" alt="Elegant Invitations" className="category-image-content" />
+                <img src="/GiftBox.png" alt="Custom Gift Boxes" className="category-image-content" />
               </div>   
             <div className="category-overlay">
               <h3>Custom Gift Boxes</h3>
@@ -300,6 +328,7 @@ function Home() {
         animate={isVisible.about ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8 }}
         ref={aboutRef}
+        id="about"
       >
         <div className="about-container">
           <div className="about-content">
@@ -338,6 +367,7 @@ function Home() {
               transition={{ delay: 0.8, duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleLearnMore}
             >
               Learn More About Us
             </motion.button>
@@ -350,23 +380,159 @@ function Home() {
               transition={{ delay: 0.3, duration: 0.8 }}
             >
               <img src="logo192.png" alt="About Us" className="about-image-content" />
-
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      {/* Instagram Section */}
-      <section className="instagram-section">
-        <h2 className="section-title">Follow Our Journey</h2>
-        <p className="instagram-caption">@hivelyimprints</p>
-        <div className="instagram-grid">
-          <div className="instagram-item"></div>
-          <div className="instagram-item"></div>
-          <div className="instagram-item"></div>
-          <div className="instagram-item"></div>
+      {/* Combined Instagram & Contact Section */}
+
+
+{/* Contact Section */}
+
+{/* Contact Section */}
+<motion.section 
+  className="contact-section" 
+  id="contact"
+  ref={socialRef}
+  initial={{ opacity: 0, y: 50 }}
+  animate={isVisible.social ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+  transition={{ duration: 0.8 }}
+>
+  <div className="contact-header">
+    <h5 className="get-in-touch">GET IN TOUCH</h5>
+    <h2 className="contact-title">Contact Me</h2>
+    <div className="title-underline"></div>
+  </div>
+
+  <div className="contact-container">
+    <motion.div 
+      className="contact-info-column"
+      initial={{ opacity: 0, x: -30 }}
+      animate={isVisible.social ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
+    >
+      <h2 className="connect-heading">Let's Connect</h2>
+      <p className="connect-text">
+        Feel free to reach out if you're looking for custom designs, 
+        have a question, or just want to connect.
+      </p>
+      
+      <div className="contact-details">
+        <div className="contact-detail-item">
+          <div className="contact-icon-circle email-circle">
+            <i className="fas fa-envelope"></i>
+          </div>
+          <div className="contact-detail-content">
+            <h4>Email: <p>hivelyimprints@gmail.com</p></h4>
+          </div>
         </div>
-      </section>
+        
+        <div className="contact-detail-item">
+          <div className="contact-icon-circle location-circle">
+            <i className="fas fa-map-marker-alt"></i>
+          </div>
+          <div className="contact-detail-content">
+            <h4>Location: <p>New York, NY</p></h4>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div className="social-media-section">
+        <h5 className="social-heading">Follow Us</h5>
+        <div className="social-icons-container">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Instagram">
+            <div className="social-icon-circle">
+              <i className="fab fa-instagram"></i>
+            </div>
+          </a>
+          
+          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Pinterest">
+            <div className="social-icon-circle">
+              <i className="fab fa-pinterest-p"></i>
+            </div>
+          </a>
+          
+          <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="TikTok">
+            <div className="social-icon-circle">
+              <i className="fab fa-tiktok"></i>
+            </div>
+          </a>
+          
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Facebook">
+            <div className="social-icon-circle">
+              <i className="fab fa-facebook-f"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </motion.div>
+    
+    <motion.div 
+      className="contact-form-column"
+      initial={{ opacity: 0, x: 30 }}
+      animate={isVisible.social ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+      transition={{ delay: 0.4, duration: 0.5 }}
+    >
+      <h2 className="form-heading">Send Me a Message</h2>
+      
+      <form className="contact-form">
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <div className="input-container">
+            <i className="fas fa-user input-icon"></i>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Your name" 
+              required 
+            />
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <div className="input-container">
+            <i className="fas fa-envelope input-icon"></i>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Your email" 
+              required 
+            />
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="message">Message</label>
+          <div className="input-container textarea-container">
+            <i className="fas fa-comment-alt input-icon textarea-icon"></i>
+            <textarea 
+              id="message" 
+              name="message" 
+              placeholder="Your message" 
+              rows="5" 
+              required
+            ></textarea>
+          </div>
+        </div>
+        
+        <motion.button 
+          type="submit" 
+          className="send-message-btn"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <i className="fas fa-paper-plane"></i>
+          Send Message
+        </motion.button>
+      </form>
+    </motion.div>
+  </div>
+</motion.section>
     </div>
   );
 }
