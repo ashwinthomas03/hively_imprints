@@ -1,8 +1,8 @@
+// Modified Home.js - Hero section with left-aligned logo and right content
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
-
 
 function Home() {
   const navigate = useNavigate();
@@ -98,75 +98,83 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/* Hero Section with Parallax Effect */}
+      {/* Modified Hero Section with Left Logo and Right Content */}
       <motion.section 
-        className="hero-section"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ 
-          opacity: isVisible.hero ? 1 : 0, 
-          scale: isVisible.hero ? 1 : 0.9 
-        }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        ref={heroRef}
-        id="home"
+  className="hero-section"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  ref={heroRef}
+  id="home"
+>
+  <div className="hero-parallax"></div>
+  <div className="hero-overlay"></div>
+  
+  {/* New split layout structure */}
+  <div className="hero-split-layout">
+    {/* Left side - Logo (no circle container) */}
+    <motion.div 
+      className="hero-logo-side"
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.3, duration: 0.8 }}
+    >
+      <div className="hero-logo-container">
+        <img 
+          src={`${process.env.PUBLIC_URL}/logo192.png`} 
+          alt="Hively Imprints" 
+          className="hero-logo-image" 
+        />
+      </div>
+    </motion.div>
+    
+    {/* Right side - Content with improved typography */}
+    <motion.div 
+      className="hero-content-side"
+      initial={{ opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.5, duration: 0.8 }}
+    >
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
       >
-        <div className="hero-parallax"></div>
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            <div className="logo-container">
-              <div className="logo-text">
-              <img 
-                src={`${process.env.PUBLIC_URL}/logo192.png`} 
-                alt="Elegant Invitations" 
-                className="category-image-content" 
-              />                     
-              </div>
-            </div>
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            Hively Imprints
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            "Design that speaks, Imprints that last"
-          </motion.p>
-          
-          <motion.p 
-            className="hero-subtitle"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            Your go-to destination for custom designs, planning, and creative inspiration
-          </motion.p>
-          
-          <motion.button 
-            className="cta-button"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            whileHover={{ scale: 1.05, backgroundColor: "#3a8a3e" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleExploreCollection}
-          >
-            Explore Our Collection
-          </motion.button>
-        </div>
-      </motion.section>
+        Hively Imprints
+      </motion.h1>
+      
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        className="tagline-quote"
+      >
+        "Design that speaks, Imprints that last"
+      </motion.p>
+      
+      <motion.p 
+        className="hero-subtitle"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.0, duration: 0.8 }}
+      >
+        Your go-to destination for custom designs, planning, and creative inspiration
+      </motion.p>
+      
+      <motion.button 
+        className="cta-button"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+        whileHover={{ scale: 1.05, backgroundColor: "#3a8a3e" }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleExploreCollection}
+      >
+        Explore Our Collection
+      </motion.button>
+    </motion.div>
+  </div>
+</motion.section>
 
       {/* Features Section with Staggered Animation */}
       <motion.section 
@@ -235,6 +243,7 @@ function Home() {
         </div>
       </motion.section>
 
+      {/* Rest of the components (Product Categories, About, Contact) */}
       {/* Product Categories */}
       <motion.section 
         className="product-categories-section"
@@ -400,154 +409,155 @@ function Home() {
         </div>
       </motion.section>
 
-      {/* Combined Instagram & Contact Section */}
-
-
-{/* Contact Section */}
-
-{/* Contact Section */}
-<motion.section 
-  className="contact-section" 
-  id="contact"
-  ref={socialRef}
-  initial={{ opacity: 0, y: 50 }}
-  animate={isVisible.social ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-  transition={{ duration: 0.8 }}
->
-  <div className="contact-header">
-    <h5 className="get-in-touch">GET IN TOUCH</h5>
-    <h2 className="contact-title">Contact Me</h2>
-    <div className="title-underline"></div>
-  </div>
-
-  <div className="contact-container">
-    <motion.div 
-      className="contact-info-column"
-      initial={{ opacity: 0, x: -30 }}
-      animate={isVisible.social ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-      transition={{ delay: 0.3, duration: 0.5 }}
-    >
-      <h2 className="connect-heading">Let's Connect</h2>
-      <p className="connect-text">
-        Feel free to reach out if you're looking for custom designs, 
-        have a question, or just want to connect.
-      </p>
-      
-      <div className="contact-details">
-        <div className="contact-detail-item">
-          <div className="contact-icon-circle email-circle">
-            <i className="fas fa-envelope"></i>
-          </div>
-          <div className="contact-detail-content">
-            <h4>Email: <p>hivelyimprints@gmail.com</p></h4>
-          </div>
+      {/* Contact Section */}
+      <motion.section 
+        className="contact-section" 
+        id="contact"
+        ref={socialRef}
+        initial={{ opacity: 0, y: 50 }}
+        animate={isVisible.social ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="contact-header">
+          <h5 className="get-in-touch">GET IN TOUCH</h5>
+          <h2 className="contact-title">Contact Me</h2>
+          <div className="title-underline"></div>
         </div>
-        
-        <div className="contact-detail-item">
-          <div className="contact-icon-circle location-circle">
-            <i className="fas fa-map-marker-alt"></i>
-          </div>
-          <div className="contact-detail-content">
-            <h4>Location: <p>New York, NY</p></h4>
+
+        <div className="contact-container">
+          <motion.div 
+            className="contact-info-column"
+            initial={{ opacity: 0, x: -30 }}
+            animate={isVisible.social ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <h2 className="connect-heading">Let's Connect</h2>
+            <p className="connect-text">
+              Feel free to reach out if you're looking for custom designs, 
+              have a question, or just want to connect.
+            </p>
             
-          </div>
-        </div>
-      </div>
-      
-      <div className="social-media-section">
-        <h5 className="social-heading">Follow Us</h5>
-        <div className="social-icons-container">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Instagram">
-            <div className="social-icon-circle">
-              <i className="fab fa-instagram"></i>
+            <div className="contact-details">
+              <div className="contact-detail-item">
+                <div className="contact-icon-circle email-circle">
+                  <i className="fas fa-envelope"></i>
+                </div>
+                <div className="contact-detail-content">
+                  <h4>Email: <p>hivelyimprints@gmail.com</p></h4>
+                </div>
+              </div>
+              
+              <div className="contact-detail-item">
+                <div className="contact-icon-circle location-circle">
+                  <i className="fas fa-map-marker-alt"></i>
+                </div>
+                <div className="contact-detail-content">
+                  <h4>Location: <p>New York, NY</p></h4>
+                  
+                </div>
+              </div>
             </div>
-          </a>
+            
+            <div className="social-media-section">
+              <h5 className="social-heading">Follow Us</h5>
+              <div className="social-icons-container">
+                <a href="mailto:hivelyimprints@gmail.com" className="social-icon-link" aria-label="Email">
+                  <div className="social-icon-circle">
+                    <i className="fas fa-envelope"></i>
+                  </div>
+                </a>
+
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Instagram">
+                  <div className="social-icon-circle">
+                    <i className="fab fa-instagram"></i>
+                  </div>
+                </a>
+                
+                <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Pinterest">
+                  <div className="social-icon-circle">
+                    <i className="fab fa-pinterest-p"></i>
+                  </div>
+                </a>
+                
+                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="TikTok">
+                  <div className="social-icon-circle">
+                    <i className="fab fa-tiktok"></i>
+                  </div>
+                </a>
+                
+                {/* <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Facebook">
+                  <div className="social-icon-circle">
+                    <i className="fab fa-facebook-f"></i>
+                  </div>
+                </a> */}
+              </div>
+            </div>
+          </motion.div>
           
-          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Pinterest">
-            <div className="social-icon-circle">
-              <i className="fab fa-pinterest-p"></i>
-            </div>
-          </a>
-          
-          <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="TikTok">
-            <div className="social-icon-circle">
-              <i className="fab fa-tiktok"></i>
-            </div>
-          </a>
-          
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Facebook">
-            <div className="social-icon-circle">
-              <i className="fab fa-facebook-f"></i>
-            </div>
-          </a>
+          <motion.div 
+            className="contact-form-column"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isVisible.social ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            <h2 className="form-heading">Send Me a Message</h2>
+            
+            <form className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <div className="input-container">
+                  <i className="fas fa-user input-icon"></i>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Your name" 
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <div className="input-container">
+                  <i className="fas fa-envelope input-icon"></i>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Your email" 
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <div className="input-container textarea-container">
+                  <i className="fas fa-comment-alt input-icon textarea-icon"></i>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    placeholder="Your message" 
+                    rows="5" 
+                    required
+                  ></textarea>
+                </div>
+              </div>
+              
+              <motion.button 
+                type="submit" 
+                className="send-message-btn"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <i className="fas fa-paper-plane"></i>
+                Send Message
+              </motion.button>
+            </form>
+          </motion.div>
         </div>
-      </div>
-    </motion.div>
-    
-    <motion.div 
-      className="contact-form-column"
-      initial={{ opacity: 0, x: 30 }}
-      animate={isVisible.social ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-      transition={{ delay: 0.4, duration: 0.5 }}
-    >
-      <h2 className="form-heading">Send Me a Message</h2>
-      
-      <form className="contact-form">
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <div className="input-container">
-            <i className="fas fa-user input-icon"></i>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
-              placeholder="Your name" 
-              required 
-            />
-          </div>
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <div className="input-container">
-            <i className="fas fa-envelope input-icon"></i>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              placeholder="Your email" 
-              required 
-            />
-          </div>
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="message">Message</label>
-          <div className="input-container textarea-container">
-            <i className="fas fa-comment-alt input-icon textarea-icon"></i>
-            <textarea 
-              id="message" 
-              name="message" 
-              placeholder="Your message" 
-              rows="5" 
-              required
-            ></textarea>
-          </div>
-        </div>
-        
-        <motion.button 
-          type="submit" 
-          className="send-message-btn"
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <i className="fas fa-paper-plane"></i>
-          Send Message
-        </motion.button>
-      </form>
-    </motion.div>
-  </div>
-</motion.section>
+      </motion.section>
     </div>
   );
 }

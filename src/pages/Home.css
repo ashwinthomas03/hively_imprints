@@ -5,12 +5,10 @@
 }
 
 
-
 /* HERO SECTION */
 .hero-section {
   position: relative;
-  height: 100vh;
-  min-height: 600px;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,6 +46,137 @@
   padding: 0 20px;
   z-index: 1;
   position: relative;
+}
+
+/* Updated Hero Section CSS - No circle container */
+
+/* Hero split layout - add this to your existing CSS */
+.hero-split-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  height: 100%;
+  padding: 0 40px;
+}
+
+/* Left side - Logo */
+.hero-logo-side {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.hero-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-logo-image {
+  width: 200%;
+  height: auto;
+  max-width: 500px; /* Increased logo size */
+}
+
+/* Right side - Content */
+.hero-content-side {
+  flex: 1;
+  text-align: left;
+  padding-left: 40px;
+}
+
+.hero-content-side h1 {
+  font-size: 4.5rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: 'Playfair Display', serif;
+  line-height: 1.1;
+}
+
+.tagline-quote {
+  font-size: 1.6rem !important;
+  margin-bottom: 20px !important;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+.hero-content-side .hero-subtitle {
+  font-size: 1.2rem !important;
+  margin-bottom: 35px !important;
+  opacity: 0.9;
+  line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+}
+
+.hero-content-side .cta-button {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 15px 40px;
+  background-color: #4CAF50;
+  border-radius: 50px;
+}
+
+/* Hide the original hero content when using the split layout */
+.hero-split-layout + .hero-content {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .hero-split-layout {
+    flex-direction: column;
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+  
+  .hero-logo-side {
+    margin-bottom: 40px;
+    padding-right: 0;
+  }
+  
+  .hero-content-side {
+    text-align: center;
+    padding-left: 0;
+  }
+  
+  .hero-logo-image {
+    max-width: 250px;
+  }
+  
+  .hero-content-side h1 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-logo-image {
+    max-width: 200px;
+  }
+  
+  .hero-content-side h1 {
+    font-size: a2.8rem;
+  }
+  
+  .tagline-quote {
+    font-size: 1.3rem !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem !important;
+  }
+  
+  .hero-split-layout {
+    padding: 20px;
+  }
 }
 
 .logo-container {
@@ -153,6 +282,8 @@
   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
   font-weight: 500;
   letter-spacing: 0.5px;
+  margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .cta-button:hover {

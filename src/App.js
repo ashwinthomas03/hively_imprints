@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
+import SplashScreen from './SplashScreen';
 
 // Create a separate collection page component
 const Collection = () => (
@@ -158,12 +159,24 @@ function AppContent() {
   );
 }
 
-// Wrapper component for HashRouter
+// Wrapper component for HashRouter with splash screen
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+  
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
+  
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <>
+      {showSplash ? (
+        <SplashScreen onComplete={handleSplashComplete} />
+      ) : (
+        <Router>
+          <AppContent />
+        </Router>
+      )}
+    </>
   );
 }
 
