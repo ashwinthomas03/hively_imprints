@@ -3,6 +3,8 @@ import { HashRouter as Router, Routes, Route, Link, useLocation, Navigate } from
 import './App.css';
 import Home from './pages/Home';
 import SplashScreen from './SplashScreen';
+import emailjs from '@emailjs/browser';
+emailjs.init("c60WYXJLshSycWcGj");
 
 // Create a separate collection page component
 const Collection = () => (

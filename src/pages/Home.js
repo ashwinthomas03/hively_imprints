@@ -1,7 +1,8 @@
-// Modified Home.js - Hero section with left-aligned logo and right content
+// Home.js - Modified with EmailJS integration for the contact form
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import './Home.css';
 
 function Home() {
@@ -13,10 +14,16 @@ function Home() {
     social: false
   });
 
+  // State for contact form data and status
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
   const aboutRef = useRef(null);
   const socialRef = useRef(null);
+  const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
     // Set hero visible immediately
@@ -96,87 +103,162 @@ function Home() {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if we're near the bottom of the page
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      
+      if (windowHeight + scrollTop >= documentHeight - 200) {
+        setIsAtBottom(true);
+      } else {
+        setIsAtBottom(false);
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (isAtBottom) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        window.scrollTo({
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
+  // Handle form input changes
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
+  
+  // Send email using EmailJS
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus("Sending...");
+  
+    emailjs
+      .send(
+        "service_4xn3a2g", // Your EmailJS Service ID
+        "template_rn7xh6m", // Your EmailJS Template ID
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          reply_to: formData.email,
+        },
+        "c60WYXJLshSycWcGj" // Your EmailJS Public Key
+      )
+      .then(
+        (result) => {
+          console.log("Email sent successfully:", result.text);
+          setStatus("Message sent successfully!");
+          // Reset form with the correct property names
+          setFormData({ name: "", email: "", message: "" });
+          setIsSubmitting(false);
+          // Clear status message after 5 seconds
+          setTimeout(() => setStatus(null), 5000);
+        },
+        (error) => {
+          console.error("Failed to send email:", error);
+          setStatus("Failed to send message. Please try again.");
+          setIsSubmitting(false);
+          // Clear error status after 5 seconds
+          setTimeout(() => setStatus(null), 5000);
+        }
+      );
+  };
+
   return (
     <div className="home-container">
-      {/* Modified Hero Section with Left Logo and Right Content */}
+      {/* Hero Section */}
       <motion.section 
-  className="hero-section"
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  ref={heroRef}
-  id="home"
->
-  <div className="hero-parallax"></div>
-  <div className="hero-overlay"></div>
-  
-  {/* New split layout structure */}
-  <div className="hero-split-layout">
-    {/* Left side - Logo (no circle container) */}
-    <motion.div 
-      className="hero-logo-side"
-      initial={{ opacity: 0, x: -50 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.3, duration: 0.8 }}
-    >
-      <div className="hero-logo-container">
-        <img 
-          src={`${process.env.PUBLIC_URL}/logo192.png`} 
-          alt="Hively Imprints" 
-          className="hero-logo-image" 
-        />
-      </div>
-    </motion.div>
-    
-    {/* Right side - Content with improved typography */}
-    <motion.div 
-      className="hero-content-side"
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.5, duration: 0.8 }}
-    >
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.8 }}
-      >
-        Hively Imprints
-      </motion.h1>
-      
-      <motion.p
+        className="hero-section"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
-        className="tagline-quote"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        ref={heroRef}
+        id="home"
       >
-        "Design that speaks, Imprints that last"
-      </motion.p>
-      
-      <motion.p 
-        className="hero-subtitle"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.0, duration: 0.8 }}
-      >
-        Your go-to destination for custom designs, planning, and creative inspiration
-      </motion.p>
-      
-      <motion.button 
-        className="cta-button"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        whileHover={{ scale: 1.05, backgroundColor: "#3a8a3e" }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleExploreCollection}
-      >
-        Explore Our Collection
-      </motion.button>
-    </motion.div>
-  </div>
-</motion.section>
+        <div className="hero-parallax"></div>
+        <div className="hero-overlay"></div>
+        <div className="hero-split-layout">
+          <motion.div 
+            className="hero-logo-side"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <div className="hero-logo-container">
+              <img 
+                src={`${process.env.PUBLIC_URL}/logo192.png`} 
+                alt="Hively Imprints" 
+                className="hero-logo-image" 
+              />
+            </div>
+          </motion.div>
+          <motion.div 
+            className="hero-content-side"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
+              Hively Imprints
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="tagline-quote"
+            >
+              "Design that speaks, Imprints that last"
+            </motion.p>
+            <motion.p 
+              className="hero-subtitle"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0, duration: 0.8 }}
+            >
+              Your go-to destination for custom designs, planning, and creative inspiration
+            </motion.p>
+          </motion.div>
+        </div>
+      </motion.section>
 
-      {/* Features Section with Staggered Animation */}
+      <motion.div 
+        className="scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+        whileHover={{ scale: 1.1 }}
+        onClick={handleScroll}
+      >
+        <div className="scroll-arrow">
+          <i className={isAtBottom ? "fas fa-chevron-up" : "fas fa-chevron-down"}></i>
+        </div>
+      </motion.div>
+
+      {/* Features Section */}
       <motion.section 
         className="features-section"
         variants={containerVariants}
@@ -191,7 +273,6 @@ function Home() {
         >
           Why Choose Hively Imprints
         </motion.h2>
-        
         <div className="features-grid">
           <motion.div 
             className="feature-card"
@@ -208,7 +289,6 @@ function Home() {
             <h3>Elegant Design</h3>
             <p>Beautifully handcrafted products with attention to detail and artistic touch</p>
           </motion.div>
-          
           <motion.div 
             className="feature-card"
             variants={itemVariants}
@@ -224,7 +304,6 @@ function Home() {
             <h3>Personalized Service</h3>
             <p>Custom designs tailored to match your unique style and vision</p>
           </motion.div>
-          
           <motion.div 
             className="feature-card"
             variants={itemVariants}
@@ -241,10 +320,20 @@ function Home() {
             <p>Finest materials and craftsmanship for products that truly last</p>
           </motion.div>
         </div>
+        <motion.button 
+          className="cta-button"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+          whileHover={{ scale: 1.05, backgroundColor: "#3a8a3e" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleExploreCollection}
+        >
+          Explore Our Collection
+        </motion.button>
       </motion.section>
 
-      {/* Rest of the components (Product Categories, About, Contact) */}
-      {/* Product Categories */}
+      {/* Product Categories Section */}
       <motion.section 
         className="product-categories-section"
         variants={containerVariants}
@@ -259,42 +348,41 @@ function Home() {
         >
           Our Collection
         </motion.h2>
-        
         <div className="categories-grid">
           <motion.div 
             className="category-card"
             variants={itemVariants}
             whileHover={{ scale: 1.03 }}
           >
-              <div className="category-image">
+            <div className="category-image">
               <img 
                 src={`${process.env.PUBLIC_URL}/WeddingCard.png`} 
                 alt="Elegant Invitations" 
                 className="category-image-content" 
-              />              
-              </div>            
-              <div className="category-overlay">
+              />
+            </div>
+            <div className="category-overlay">
               <h3>Elegant Invitations</h3>
               <button 
                 className="category-btn" 
                 onClick={() => window.open('https://rb.gy/npfcbj')}
               >
                 View Collection
-              </button>            
-              </div>
+              </button>
+            </div>
           </motion.div>
-          
           <motion.div 
             className="category-card"
             variants={itemVariants}
             whileHover={{ scale: 1.03 }}
           >
             <div className="category-image-gift">
-            <img 
+              <img 
                 src={`${process.env.PUBLIC_URL}/GiftBox.png`} 
                 alt="Elegant Invitations" 
                 className="category-image-content" 
-              />                     </div>   
+              />
+            </div>
             <div className="category-overlay">
               <h3>Custom Gift Boxes</h3>
               <button 
@@ -302,10 +390,9 @@ function Home() {
                 onClick={() => window.open('https://rb.gy/npfcbj')}
               >
                 View Collection
-              </button>     
+              </button>
             </div>
           </motion.div>
-          
           <motion.div 
             className="category-card"
             variants={itemVariants}
@@ -313,16 +400,15 @@ function Home() {
           >
             <div className="category-image decor-image"></div>
             <div className="category-overlay">
-              <h3>Templates</h3>
+              <h3>Customizable Templates</h3>
               <button 
                 className="category-btn" 
                 onClick={() => window.open('https://hively-imprints.printify.me/')}
               >
                 View Collection
-              </button>     
+              </button>
             </div>
           </motion.div>
-
           <motion.div 
             className="category-card"
             variants={itemVariants}
@@ -330,19 +416,19 @@ function Home() {
           >
             <div className="category-image decor-image"></div>
             <div className="category-overlay">
-              <h3>Digital Designs</h3>
+              <h3>Modern Prints</h3>
               <button 
                 className="category-btn" 
                 onClick={() => window.open('https://hively-imprints.printify.me/')}
               >
                 View Collection
-              </button>     
+              </button>
             </div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* About Section with Fade-in */}
+      {/* About Section */}
       <motion.section 
         className="about-section"
         initial={{ opacity: 0, y: 50 }}
@@ -361,7 +447,6 @@ function Home() {
             >
               Our Story
             </motion.h2>
-            
             <motion.p
               initial={{ opacity: 0 }}
               animate={isVisible.about ? { opacity: 1 } : { opacity: 0 }}
@@ -370,7 +455,6 @@ function Home() {
               At Hively Imprints, we're dedicated to creating beautiful, handcrafted products that tell a story. 
               Our journey began with a passion for elegant design and a commitment to quality craftsmanship.
             </motion.p>
-            
             <motion.p
               initial={{ opacity: 0 }}
               animate={isVisible.about ? { opacity: 1 } : { opacity: 0 }}
@@ -380,7 +464,6 @@ function Home() {
               that stands out. Each piece we create is crafted with love and attention to detail, 
               ensuring that your special moments are captured in a way that will be cherished forever.
             </motion.p>
-            
             <motion.button 
               className="learn-more-btn"
               initial={{ opacity: 0 }}
@@ -404,12 +487,13 @@ function Home() {
                 src={`${process.env.PUBLIC_URL}/logo192.png`} 
                 alt="Elegant Invitations" 
                 className="category-image-content" 
-              />                   </motion.div>
+              />
+            </motion.div>
           </div>
         </div>
       </motion.section>
 
-      {/* Contact Section */}
+      {/* Contact Section with EmailJS Integration */}
       <motion.section 
         className="contact-section" 
         id="contact"
@@ -436,7 +520,6 @@ function Home() {
               Feel free to reach out if you're looking for custom designs, 
               have a question, or just want to connect.
             </p>
-            
             <div className="contact-details">
               <div className="contact-detail-item">
                 <div className="contact-icon-circle email-circle">
@@ -446,18 +529,15 @@ function Home() {
                   <h4>Email: <p>hivelyimprints@gmail.com</p></h4>
                 </div>
               </div>
-              
               <div className="contact-detail-item">
                 <div className="contact-icon-circle location-circle">
                   <i className="fas fa-map-marker-alt"></i>
                 </div>
                 <div className="contact-detail-content">
                   <h4>Location: <p>New York, NY</p></h4>
-                  
                 </div>
               </div>
             </div>
-            
             <div className="social-media-section">
               <h5 className="social-heading">Follow Us</h5>
               <div className="social-icons-container">
@@ -466,30 +546,21 @@ function Home() {
                     <i className="fas fa-envelope"></i>
                   </div>
                 </a>
-
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Instagram">
+                <a href="https://www.instagram.com/hivelyimprints?igsh=MWd0dWJxZXU5ZTdxaA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Instagram">
                   <div className="social-icon-circle">
                     <i className="fab fa-instagram"></i>
                   </div>
                 </a>
-                
-                <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Pinterest">
+                <a href="https://www.pinterest.com/hivelyimprints/" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Pinterest">
                   <div className="social-icon-circle">
                     <i className="fab fa-pinterest-p"></i>
                   </div>
                 </a>
-                
-                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="TikTok">
+                <a href="https://www.tiktok.com/@hively.imprints?_t=ZT-8vBd8Tr9XBL&_r=1" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="TikTok">
                   <div className="social-icon-circle">
                     <i className="fab fa-tiktok"></i>
                   </div>
                 </a>
-                
-                {/* <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon-link" aria-label="Facebook">
-                  <div className="social-icon-circle">
-                    <i className="fab fa-facebook-f"></i>
-                  </div>
-                </a> */}
               </div>
             </div>
           </motion.div>
@@ -501,8 +572,7 @@ function Home() {
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             <h2 className="form-heading">Send Me a Message</h2>
-            
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={sendEmail}>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <div className="input-container">
@@ -512,6 +582,8 @@ function Home() {
                     id="name" 
                     name="name" 
                     placeholder="Your name" 
+                    value={formData.name}
+                    onChange={handleFormChange}
                     required 
                   />
                 </div>
@@ -526,6 +598,8 @@ function Home() {
                     id="email" 
                     name="email" 
                     placeholder="Your email" 
+                    value={formData.email}
+                    onChange={handleFormChange}
                     required 
                   />
                 </div>
@@ -540,6 +614,8 @@ function Home() {
                     name="message" 
                     placeholder="Your message" 
                     rows="5" 
+                    value={formData.message}
+                    onChange={handleFormChange}
                     required
                   ></textarea>
                 </div>
@@ -554,6 +630,7 @@ function Home() {
                 <i className="fas fa-paper-plane"></i>
                 Send Message
               </motion.button>
+              {status && <p className="status-message">{status}</p>}
             </form>
           </motion.div>
         </div>

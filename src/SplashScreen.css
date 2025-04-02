@@ -28,36 +28,73 @@
   }
   
   /* Logo styling - direct image without circle container */
-  .logo-container {
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: center;
+  .logo-image, .hero-logo-image {
+    width: 500px !important; /* Force the large size with !important */
+    height: auto;
+    max-width: 90vw !important; /* Prevent horizontal overflow by using viewport width */
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Ensure logo container allows full display */
+  .logo-container, .hero-logo-container {
+    margin-bottom: 10px;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     perspective: 1000px;
     z-index: 2;
     position: relative;
+    width: 100% !important; /* Full width container */
+    max-width: 100% !important;
   }
   
-  .logo-image {
-    width: 500px; /* Increased size */
-    height: auto;
-    position: relative;
-    z-index: 1;
+  /* Responsive adjustments specifically for mobile */
+  @media screen and (max-width: 768px) {
+    .logo-image, .hero-logo-image {
+      width: 85vw !important; /* Use viewport width on mobile for better scaling */
+      min-width: 280px !important; /* Ensure minimum size */
+    }
+    
+    /* Adjust the hero section layout for better mobile display */
+    .hero-split-layout {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 20px !important;
+      text-align: center !important;
+    }
+    
+    .hero-logo-side, .hero-content-side {
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 auto !important;
+      text-align: center !important;
+    }
+    
+    /* Ensure the logo container isn't constrained */
+    .hero-logo-side {
+      max-width: 100vw !important;
+      overflow-x: visible !important;
+    }
   }
   
-  .logo-glow {
-    position: absolute;
-    width: 120%;
-    height: 120%;
-    top: -10%;
-    left: -10%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-    z-index: 1;
-    border-radius: 50%;
+  /* Add explicit styles for the smallest screens */
+  @media screen and (max-width: 480px) {
+    .logo-image, .hero-logo-image {
+      width: 85vw !important; /* Keep using viewport width */
+      min-width: 250px !important; /* Slightly smaller minimum size */
+    }
   }
   
+  /* Fix potential overflow issues in the overall hero section */
+  .hero-section {
+    overflow: visible !important; /* Ensure logo isn't cut off */
+  }
   /* Horizontal text styling */
   .text-container {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
   
   .company-name {
@@ -87,7 +124,7 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
   }
   
   .tagline-line {
