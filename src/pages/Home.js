@@ -388,7 +388,7 @@ function Home() {
           >
             <div className="category-image-gift">
               <img 
-                src={`${process.env.PUBLIC_URL}/GiftBox.png`} 
+                src={`${process.env.PUBLIC_URL}/giftbox.png`} 
                 alt="Custom Gift Boxes" 
                 className="category-image-content" 
               />
