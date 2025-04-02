@@ -490,17 +490,18 @@ function Home() {
               ensuring that your special moments are captured in a way that will be cherished forever.
             </motion.p>
             
-            <motion.button 
-              className="learn-more-btn"
-              initial={{ opacity: 0 }}
-              animate={isVisible.about ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ delay: 0.4, duration: 0.4 }} // Reduced delay and duration
-              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }} // Faster hover
-              whileTap={{ scale: 0.95 }}
-              onClick={handleLearnMore}
-            >
-              Learn More About Us
-            </motion.button>
+            {/* <motion.button 
+  className="learn-more-btn"
+  initial={{ opacity: 0 }}
+  animate={isVisible.about ? { opacity: 1 } : { opacity: 0 }}
+  transition={{ delay: 0.4, duration: 0.4 }} // Reduced delay and duration
+  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }} // Faster hover
+  whileTap={{ scale: 0.95 }}
+  onClick={handleLearnMore}
+>
+  Learn More About Us
+</motion.button> */}
+
           </div>
           <div className="about-image-container">
             <motion.div 
