@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hively_imprints/static/css/main.6afd92d0.css",
-    "main.js": "/hively_imprints/static/js/main.2e97366b.js",
+    "main.js": "/hively_imprints/static/js/main.216ad103.js",
     "static/js/453.311d94b8.chunk.js": "/hively_imprints/static/js/453.311d94b8.chunk.js",
     "index.html": "/hively_imprints/index.html",
     "main.6afd92d0.css.map": "/hively_imprints/static/css/main.6afd92d0.css.map",
-    "main.2e97366b.js.map": "/hively_imprints/static/js/main.2e97366b.js.map",
+    "main.216ad103.js.map": "/hively_imprints/static/js/main.216ad103.js.map",
     "453.311d94b8.chunk.js.map": "/hively_imprints/static/js/453.311d94b8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6afd92d0.css",
-    "static/js/main.2e97366b.js"
+    "static/js/main.216ad103.js"
   ]
 }
