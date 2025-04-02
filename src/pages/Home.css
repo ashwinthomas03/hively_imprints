@@ -465,6 +465,13 @@
   cursor: pointer;
 }
 
+.category-image-gift{
+  width: 10% auto;
+  height: 10% auto;
+  background-size: cover;
+  background-position: center;
+}
+
 .category-image {
   width: 100%;
   height: 100%;
