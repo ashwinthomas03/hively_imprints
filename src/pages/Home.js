@@ -461,7 +461,7 @@ function Home() {
               transition={{ delay: 0.1, duration: 0.4 }} // Reduced delay and duration
               className="section-title"
             >
-              Our Story
+              About Us
             </motion.h2>
             
             <motion.p
