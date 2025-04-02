@@ -130,14 +130,7 @@ function Home() {
         top: 0,
         behavior: 'smooth'
       });
-    } else {
-      const featuresSection = document.getElementById('features');
-      if (featuresSection) {
-        featuresSection.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    }
+    } 
   };
 
   // Handle form input changes
