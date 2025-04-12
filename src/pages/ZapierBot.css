@@ -1,0 +1,67 @@
+/* ZapierBot.css */
+
+/* Container for Zapier chatbot elements */
+.zapier-bot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Ensure Zapier's interface elements are visible and properly positioned */
+zapier-interfaces-chatbot-embed {
+  --zi-chatbot-z-index: 1001;
+}
+
+/* Styling for the iframe container */
+.zapier-iframe-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  z-index: 999;
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* Make sure Zapier's chat button displays correctly */
+.zi-button-text {
+  color: white !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Style the chat button with blue color */
+.zi-button {
+  background-color: #ff5e00 !important; /* Changed to blue */
+  box-shadow: 0 4px 15px rgba(255, 77, 0, 0.4) !important; /* Updated shadow for blue */
+}
+
+.zi-button:hover {
+  background-color: #b33900 !important; /* Darker blue on hover */
+}
+
+/* Style any icons within the Zapier interface to be blue */
+.zi-button svg, 
+.zi-chatbot-header svg,
+.zi-chatbot-footer svg {
+  fill: #ad5021 !important; /* Ensure icons are blue */
+}
+
+/* Position adjustments for when the scroll indicator is present */
+@media (max-width: 768px) {
+  .zapier-bot-container {
+    bottom: 80px; /* Move up when on mobile to avoid overlapping with scroll indicator */
+  }
+  
+  .zapier-iframe-container {
+    width: calc(100% - 40px);
+    right: 20px;
+    bottom: 160px; /* Position above the bot container on mobile */
+  }
+  
+  .zapier-iframe-container iframe {
+    width: 100%;
+    height: 500px;
+  }
+}

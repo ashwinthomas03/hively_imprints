@@ -184,7 +184,7 @@
 .scroll-indicator {
   position: fixed;
   margin-top: 40px;
-  right: 30px;
+  right: 1380px;
   flex-direction: column;
   align-items: center;
   color: white;

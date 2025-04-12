@@ -1,9 +1,10 @@
-// Home.js - With optimized animations and EmailJS integration
+// Home.js - With optimized animations, EmailJS integration, and direct Zapier Bot embed
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import './Home.css';
+import './ZapierBot.css'; // Import the Zapier Bot CSS
 
 function Home() {
   const navigate = useNavigate();
@@ -53,10 +54,21 @@ function Home() {
     if (aboutRef.current) observer.observe(aboutRef.current);
     if (socialRef.current) observer.observe(socialRef.current);
 
+    // Add Zapier script to head
+    const zapierScript = document.createElement('script');
+    zapierScript.src = 'https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js';
+    zapierScript.async = true;
+    zapierScript.type = 'module';
+    document.head.appendChild(zapierScript);
+
     return () => {
       if (featuresRef.current) observer.unobserve(featuresRef.current);
       if (aboutRef.current) observer.unobserve(aboutRef.current);
       if (socialRef.current) observer.unobserve(socialRef.current);
+      // Clean up script when component unmounts
+      if (document.head.contains(zapierScript)) {
+        document.head.removeChild(zapierScript);
+      }
     };
   }, []);
 
@@ -482,19 +494,6 @@ function Home() {
               that stands out. Each piece we create is crafted with love and attention to detail, 
               ensuring that your special moments are captured in a way that will be cherished forever.
             </motion.p>
-            
-            {/* <motion.button 
-  className="learn-more-btn"
-  initial={{ opacity: 0 }}
-  animate={isVisible.about ? { opacity: 1 } : { opacity: 0 }}
-  transition={{ delay: 0.4, duration: 0.4 }} // Reduced delay and duration
-  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }} // Faster hover
-  whileTap={{ scale: 0.95 }}
-  onClick={handleLearnMore}
->
-  Learn More About Us
-</motion.button> */}
-
           </div>
           <div className="about-image-container">
             <motion.div 
@@ -673,6 +672,14 @@ function Home() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Zapier Chatbot */}
+      <div className="zapier-bot-container">
+        <zapier-interfaces-chatbot-embed 
+          is-popup='true' 
+          chatbot-id='cm9dm67jz008l13j331dnfy90'>
+        </zapier-interfaces-chatbot-embed>
+      </div>
     </div>
   );
 }
